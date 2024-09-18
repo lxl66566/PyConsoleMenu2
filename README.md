@@ -1,66 +1,59 @@
-# PyConsoleMenu
+# PyConsoleMenu2
 
-[![CodeFactor](https://www.codefactor.io/repository/github/baggerfast/pyconsolemenu/badge)](https://www.codefactor.io/repository/github/baggerfast/pyconsolemenu)
-[![BUILD-STATUS](https://github.com/BaggerFast/PyConsoleMenu/workflows/CI/badge.svg)](https://github.com/BaggerFast/PyConsoleMenu/actions)
+An extreamly easy to use, cross-platform Python console menu. (forked ver.)
 
-A simple Python menu in the terminal using curses. 
-Ideal for people who want to quickly make a menu without writing their own complicated crutches. 
-Includes: SelectorMenu, MultipleSelectorMenu, FunctionalMenu.
+Features:
+
+- Cross platform, interactive selection
+- Flexible Builder pattern
+- Multi selection and Callback selection support
 
 ## Preview
+
 ![Selector](https://github.com/BaggerFast/PyConsoleMenu/blob/main/assets/selector.gif?raw=true)
 
 [See other](https://github.com/BaggerFast/PyConsoleMenu/tree/main/assets)
 
 ## Installation 💾
-- using pip
-```
-$ pip install PyConsoleMenu
-```
 
-- using GitHub *(требуется [git](https://git-scm.com/downloads))*
+```sh
+pip install PyConsoleMenu2
 ```
-$ git clone https://github.com/BaggerFast/PyConsoleMenu
-$ cd PyConsoleMenu
-$ pip install -r requirements.txt
-```
-
-## Additionally ⌨️
-- Docs in code
-- Type hints
-
 
 ## Usage example 👨‍💻
 
 ```py
-from PyConsoleMenu import MultiSelectorMenu, FunctionalOption, SelectorMenu, FunctionalMenu
+from PyConsoleMenu2 import BaseMenu, FunctionalMenu, MultiMenu
 
+# basic usage, get the index
+ret = BaseMenu("title: BaseMenu").add_options(["a", "b", "c"]).run()
+print(ret)
 
-def multi_selector():
-    menu = MultiSelectorMenu(['Cheburashka', 'Parrot', 'Snake', 'Gena'], title='MultiSelector', count=3)
-    ans = menu.input()
-    print(ans)
+# get the name, and more options
+ret = (
+    BaseMenu("title: BaseMenu")
+    .add_options(["a", "b", "c"])
+    .add_option("d")
+    .default_index(1)
+    .prefix("[")
+    .suffix("]")
+    .raise_when_too_small()
+    .run_get_item()
+)
+print(ret)
 
+# multi selection
+ret = MultiMenu("title: MultiMenu").max_count(2).add_options(["a", "b", "c"]).run()
+print(ret)
 
-def selector():
-    menu = SelectorMenu(['Cheburashka', 'Parrot', 'Snake', 'Gena'], title='Selector')
-    ans = menu.input()
-    print(ans)
-
-
-def functional():
-    data = [
-        FunctionalOption('Cheburashka', lambda: print('I am a Parrot')),
-        FunctionalOption('Parrot', lambda: print('I am a Cheburashka')),
-    ]
-    menu = FunctionalMenu(data, title='Functional')
-    ans = menu.input()
-    ans()
+# callback selection
+func = (
+    FunctionalMenu("title: FunctionalMenu")
+    .add_option("a", lambda: print("a"))
+    .add_options([("b", lambda: print("b")), ("c", lambda: print("c"))])
+    .run_get_item()
+)
+func()
 ```
-*[See more examples](https://github.com/BaggerFast/PyConsoleMenu/tree/main/examples)*
 
-**Was written in these videos on YouTube 👀** \
-[Video#1](https://www.youtube.com/watch?v=wgK90PIzlng&t=118s) \
-[Stream#1](https://www.youtube.com/watch?v=7eHcjkM-mTs&t=6046s) \
-[Stream#2](https://www.youtube.com/watch?v=ppZoCcmPhpc&t=2941s)
-
+~~_[See more examples](https://github.com/lxl66566/PyConsoleMenu/tree/main/examples)_~~

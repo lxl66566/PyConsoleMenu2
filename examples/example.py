@@ -1,23 +1,31 @@
-from PyConsoleMenu import MultiSelectorMenu, FunctionalOption, SelectorMenu, FunctionalMenu
+from PyConsoleMenu2 import BaseMenu, FunctionalMenu, MultiMenu
 
+# basic usage, get the index
+ret = BaseMenu("title: BaseMenu").add_options(["a", "b", "c"]).run()
+print(ret)
 
-def multi_selector():
-    menu = MultiSelectorMenu(['Cheburashka', 'Parrot', 'Snake', 'Gena'], title='MultiSelector', count=3)
-    ans = menu.input()
-    print(ans)
+# get the name, and more options
+ret = (
+    BaseMenu("title: BaseMenu")
+    .add_options(["a", "b", "c"])
+    .add_option("d")
+    .default_index(1)
+    .prefix("[")
+    .suffix("]")
+    .raise_when_too_small()
+    .run_get_item()
+)
+print(ret)
 
+# multi selection
+ret = MultiMenu("title: MultiMenu").max_count(2).add_options(["a", "b", "c"]).run()
+print(ret)
 
-def selector():
-    menu = SelectorMenu(['Cheburashka', 'Parrot', 'Snake', 'Gena'], title='Selector')
-    ans = menu.input()
-    print(ans)
-
-
-def functional():
-    data = [
-        FunctionalOption('Cheburashka', lambda: print('I am a Parrot')),
-        FunctionalOption('Parrot', lambda: print('I am a Cheburashka')),
-    ]
-    menu = FunctionalMenu(data, title='Functional')
-    ans = menu.input()
-    ans()
+# callback selection
+func = (
+    FunctionalMenu("title: FunctionalMenu")
+    .add_option("a", lambda: print("a"))
+    .add_options([("b", lambda: print("b")), ("c", lambda: print("c"))])
+    .run_get_item()
+)
+func()
