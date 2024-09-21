@@ -16,7 +16,7 @@ class MultiMenu(BaseMenu):
         self.__selected: Set[int] = set()
         self._control_config[KeyboardAction.SELECT] = self.__select
 
-    def max_count(self, max_count: int) -> "MultiMenu":
+    def max_count(self, max_count: int):
         """
         set the max count of options could be selected
         """
@@ -33,7 +33,7 @@ class MultiMenu(BaseMenu):
     def _get_selected_index(self) -> Set[int]:  # type: ignore
         return self.__selected
 
-    def _draw_options(self, screen, max_x: int) -> None:
+    def _draw_options(self, max_x: int) -> None:
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
         for local_y, line in enumerate(self._options):
@@ -43,9 +43,9 @@ class MultiMenu(BaseMenu):
                 line = f'{" " * len(self._prefix)}{line}'
 
             if local_y in self.__selected:
-                screen.addnstr(self._y, 0, line, max_x, curses.color_pair(1))
+                self.stdscr.addnstr(self._y, 0, line, max_x, curses.color_pair(1))
             else:
-                screen.addnstr(self._y, 0, line, max_x)
+                self.stdscr.addnstr(self._y, 0, line, max_x)
             self._y += 1
 
     def run_get_item(self) -> List[str]:  # type: ignore
@@ -66,9 +66,7 @@ class FunctionalMenu(BaseMenu):
         self.__functions: List[Optional[Callable]] = []
         super().__init__(title)
 
-    def add_option(
-        self, option: str, callback: Optional[Callable] = None
-    ) -> "FunctionalMenu":
+    def add_option(self, option: str, callback: Optional[Callable] = None):
         self.__functions.append(callback)
         super().add_option(option)
         return self
@@ -76,7 +74,7 @@ class FunctionalMenu(BaseMenu):
     # we need to rewrite the method
     def add_options(  # type: ignore
         self, options: List[Optional[Tuple[str, Callable]]]
-    ) -> "FunctionalMenu":
+    ):
         names, funcs = zip(*options)
         self.__functions.extend(funcs)
         super().add_options(names)

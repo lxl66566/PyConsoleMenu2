@@ -1,6 +1,6 @@
 # PyConsoleMenu2
 
-An extreamly easy to use, cross-platform Python console menu. (forked ver.)
+An extreamly easy to use Python console menu. (fork ver.)
 
 Features:
 
@@ -57,3 +57,7 @@ func()
 ```
 
 ~~_[See more examples](https://github.com/lxl66566/PyConsoleMenu/tree/main/examples)_~~
+
+## Additional
+
+There's problem when displaying CJK string on windows terminal, caused by upstream dependency [windows-curses](https://github.com/zephyrproject-rtos/windows-curses). But still usable.

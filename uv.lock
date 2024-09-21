@@ -4,16 +4,16 @@ requires-python = ">=3.7"
 [[package]]
 name = "pyconsolemenu2"
 version = "1.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "windows-curses", marker = "platform_system == 'Windows'" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "pyconsolemenu2", virtual = "." },
-    { name = "windows-curses", marker = "platform_system == 'Windows'", specifier = ">=2.3.3" },
-]
+requires-dist = [{ name = "windows-curses", marker = "platform_system == 'Windows'", specifier = ">=2.3.3" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pyconsolemenu2", editable = "." }]
 
 [[package]]
 name = "windows-curses"
