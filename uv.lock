@@ -12,9 +12,6 @@ dependencies = [
 [package.metadata]
 requires-dist = [{ name = "windows-curses", marker = "platform_system == 'Windows'", specifier = ">=2.3.3" }]
 
-[package.metadata.requires-dev]
-dev = [{ name = "pyconsolemenu2", editable = "." }]
-
 [[package]]
 name = "windows-curses"
 version = "2.3.3"

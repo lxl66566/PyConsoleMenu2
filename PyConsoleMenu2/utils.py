@@ -6,7 +6,8 @@ from typing import Optional
 class KeyboardAction(Enum):
     UP = (KEY_UP, ord("w"), ord("k"))
     DOWN = (KEY_DOWN, ord("s"), ord("j"))
-    APPROVE = (KEY_ENTER, ord("\n"))
+    # KEY_ENTER could not be used in raw mode, so add 13
+    APPROVE = (KEY_ENTER, ord("\n"), 13)
     SELECT = (ord(" "),)
     CANCEL = (KEY_CANCEL, KEY_EXIT, ord("q"), 3)
 

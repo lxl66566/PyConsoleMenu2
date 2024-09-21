@@ -1,12 +1,16 @@
 import curses
 from contextlib import suppress
-from typing import Callable, List, Optional, Set, Tuple
+from typing import Any, List, Optional, Set, Tuple
 
 from .base import BaseMenu
 from .utils import KeyboardAction
 
 
 class MultiMenu(BaseMenu):
+    """
+    menu with multiple selection
+    """
+
     def __init__(
         self,
         title: str = "",
@@ -58,27 +62,32 @@ class MultiMenu(BaseMenu):
         return super().run()  # type: ignore
 
 
-class FunctionalMenu(BaseMenu):
+class ItemMenu(BaseMenu):
+    """
+    A menu with user given items related to each menu items.
+    """
+
     def __init__(
         self,
         title: str = "",
     ) -> None:
-        self.__functions: List[Optional[Callable]] = []
+        self.__items: List[Optional[Any]] = []
         super().__init__(title)
 
-    def add_option(self, option: str, callback: Optional[Callable] = None):
-        self.__functions.append(callback)
+    def add_option(self, option: str, callback: Optional[Any] = None):
+        self.__items.append(callback)
         super().add_option(option)
         return self
 
     # we need to rewrite the method
     def add_options(  # type: ignore
-        self, options: List[Optional[Tuple[str, Callable]]]
+        self, options: List[Optional[Tuple[str, Any]]]
     ):
-        names, funcs = zip(*options)
-        self.__functions.extend(funcs)
+        names, items = zip(*options)
+        self.__items.extend(items)
         super().add_options(names)
         return self
 
-    def run_get_item(self) -> Callable:  # type: ignore
-        return self.__functions[super().run()]  # type: ignore
+    def run_get_item(self) -> Any:  # type: ignore
+        assert len(self.__items) == len(self._options), "Invalid number of items"
+        return self.__items[super().run()]  # type: ignore
