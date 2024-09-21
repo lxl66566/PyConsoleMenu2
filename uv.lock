@@ -3,7 +3,7 @@ requires-python = ">=3.7"
 
 [[package]]
 name = "pyconsolemenu2"
-version = "1.1.0"
+version = "1.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "windows-curses", marker = "platform_system == 'Windows'" },

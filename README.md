@@ -55,15 +55,20 @@ func = (
     .run_get_item()
 )
 func()
-
 ```
 
 ~~_[See more examples](https://github.com/lxl66566/PyConsoleMenu/tree/main/examples)_~~
 
 ## Document
 
-- Three types of menus: **BaseMenu** (only strings), **MultiMenu** (multi selections), **ItemMenu** (binds items to each option)
+- Three types of menus: _BaseMenu_ (only strings), _MultiMenu_ (multi selections), _ItemMenu_ (binds items to each option)
 - Keybindings: [See code](./PyConsoleMenu2/utils.py)
+- methods:
+  - `run`: get index of selected option.
+  - `run_get_item`: get the related item of selected option. Option string for _BaseMenu_, a set of string for _MultiMenu_, and user given item for _ItemMenu_.
+  - `raise_when_too_small`: when set to True, raise a `error.RenderException`, otherwise ignore drawing.
+  - `on_user_cancel`: exec a function when user cancel the input. If not set, raise `KeyboardInterrupt` by default.
+  - ...
 
 ## Additional
 

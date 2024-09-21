@@ -6,6 +6,7 @@ from typing import Any, Callable, Dict, List
 
 import _curses
 
+from .error import RenderException
 from .utils import KeyboardAction
 
 
@@ -126,7 +127,7 @@ class BaseMenu(ABC):
             self._draw_options(max_x)
         except _curses.error:
             if self._raise_when_too_small:
-                raise Exception("This terminal is small to update information")
+                raise RenderException("This terminal is small to update information")
 
         self.stdscr.refresh()
 
